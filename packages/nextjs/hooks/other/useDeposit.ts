@@ -7,7 +7,6 @@ import {
   useSendTransaction,
   useWaitForTransaction,
 } from 'wagmi';
-import { CurrencyCode } from '~~/components/deposit';
 import { useApprove } from '~~/hooks/other/useApprove';
 import { LEVEREDVAULT_ABI, LEVEREDVAULT_CONTRACT_ADDRESS } from '~~/utils/constants';
 import { parseEther } from '~~/utils/parseEther';
@@ -61,7 +60,7 @@ export const useDeposit = () => {
     // TODO: onError: Show error toast message
   });
 
-  const handleDeposit = ({ currencyCode }: { currencyCode: CurrencyCode }) => {
+  const handleDeposit = ({ currencyCode }: { currencyCode: any }) => {
     // if 'WETH' we need to make sure the user has approved the value of WETH before allowing them to deposit.
     if (currencyCode === 'WMATIC') {
       if (allowance.lt(parseEther(depositValue))) {
