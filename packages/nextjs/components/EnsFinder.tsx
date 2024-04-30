@@ -39,10 +39,10 @@ const FinderHeading = ({ ImageWidth }: FinderHeadingProps) => {
         <Image src={planes} alt="Planes" width={ImageWidth} />
       </Flex>
       <Heading as="h1" fontSize={{ base: '30px', md: '45px' }} pt="5" mb="-5">
-        ENS JSON API & Cloudflare Worker
+        Query blockchain
       </Heading>
       <Text fontSize={{ base: '12px', md: '14px' }} color="gray.500">
-        written in Rust
+        Frontend for ENS JSON API & Cloudflare Worker written in Rust
       </Text>
     </>
   );
@@ -99,8 +99,13 @@ export const EnsFinder = () => {
     e.preventDefault();
 
     // if valid address, query endpoint that you save in local env variable
-
-    setEnsData('solidoracle.eth');
+    if (/^(0x[a-fA-F0-9]{40}|.+\.eth)$/.test(addy)) {
+      setIsLoading(true);
+      const response = await fetch(`${process.env.ENDPOINT_URL}/${addy}`);
+      const data = await response.json();
+      setEnsData(data.name);
+      setIsLoading(false);
+    }
   };
 
   return (
