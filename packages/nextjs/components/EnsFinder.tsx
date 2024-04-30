@@ -102,8 +102,8 @@ export const EnsFinder = () => {
     if (/^(0x[a-fA-F0-9]{40}|.+\.eth)$/.test(addy)) {
       setIsLoading(true);
       try {
-        console.log('process.env.ENDPOINT_URL', process.env.ENDPOINT_URL);
-        const response = await fetch(`${process.env.ENDPOINT_URL}/${addy}`);
+        console.log('process.env.ENDPOINT_URL', process.env.NEXT_PUBLIC_ENDPOINT_URL);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}/${addy}`);
         if (!response.ok) {
           throw new Error(`API call failed with status: ${response.status}`);
         }
