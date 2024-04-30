@@ -101,9 +101,22 @@ export const EnsFinder = () => {
     // if valid address, query endpoint that you save in local env variable
     if (/^(0x[a-fA-F0-9]{40}|.+\.eth)$/.test(addy)) {
       setIsLoading(true);
-      const response = await fetch(`${process.env.ENDPOINT_URL}/${addy}`);
-      const data = await response.json();
-      setEnsData(data.name);
+      try {
+        console.log('process.env.ENDPOINT_URL', process.env.ENDPOINT_URL);
+        const response = await fetch(`${process.env.ENDPOINT_URL}/${addy}`);
+        if (!response.ok) {
+          throw new Error(`API call failed with status: ${response.status}`);
+        }
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Received non-JSON response from the API');
+        }
+        const data = await response.json();
+        setEnsData(data.name); // This line correctly sets the 'name' field from the JSON response
+      } catch (error) {
+        console.error('Failed to fetch ENS data:', error);
+        // Optionally, update the UI to show an error message
+      }
       setIsLoading(false);
     }
   };
