@@ -31,9 +31,8 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiConfig client={wagmiClient}>
-        <ChakraProvider theme={customTheme}>
-          <NextNProgress />
-          <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar}>
+        <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar}>
+          <ChakraProvider theme={customTheme}>
             <div className="flex flex-col min-h-screen">
               <Header />
               <main className="relative flex flex-col flex-1">
@@ -43,8 +42,8 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
               <Footer />
             </div>
             <Toaster />
-          </RainbowKitProvider>
-        </ChakraProvider>
+          </ChakraProvider>
+        </RainbowKitProvider>
       </WagmiConfig>
     </QueryClientProvider>
   );
